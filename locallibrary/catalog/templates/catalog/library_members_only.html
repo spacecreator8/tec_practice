@@ -1,0 +1,13 @@
+{% extends 'base_generic.html' %}
+
+{% block content %}
+<h2>Borrowed books</h2>
+<ul>
+    {% for i in data %}
+        <li>{{ i.id }}</li>
+        <li>{{ i.book}}</li>
+        <li>{{i.borrower.username}}</li>
+    <hr>
+    {% endfor %}
+</ul>
+{% endblock %}

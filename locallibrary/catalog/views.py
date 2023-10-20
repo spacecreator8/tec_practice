@@ -2,6 +2,7 @@ from django.shortcuts import render
 from .models import Book, Author, BookInstance, Genre
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponse
 
 
 def index(request):
@@ -53,3 +54,12 @@ class LoanedBooksByUserListView(LoginRequiredMixin,generic.ListView):
             .filter(status__exact='o')
             .order_by('due_back')
         )
+
+def libraryMembersOnly(request):
+    if request.user.groups.filter(name="Library Members").exists():
+        BookInstData = BookInstance.objects.filter(status = 'o')
+        return render(request, 'catalog/library_members_only.html', {'data': BookInstData})
+    else:
+        return render(request, 'catalog/u_not_library_member.html')
+
+
