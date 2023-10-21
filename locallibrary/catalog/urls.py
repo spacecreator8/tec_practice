@@ -11,8 +11,8 @@ urlpatterns = [
     path('testlm/', views.libraryMembersOnly, name="test-lib-members"),
     path('form_add/', views.CustomEnter.as_view(), name="custom_enter"),
     path('edit_list/', views.EditList.as_view(), name="custom_edit"),
-    path('edit_list/editing/<int:pk>', views.CustomEditing.as_view(), name="custom-edit-instance")
-    # path('edit_list/deletion/<int:pk_inst>', views.stub, name="custom-delete-instance")
+    path('edit_list/editing/<int:pk>', views.CustomEditing.as_view(), name="custom-edit-instance"),
+    path('edit_list/deletion/<int:pk>', views.CustomDeletion, name="custom-delete-instance")
 ]
 urlpatterns += [
     path('mybooks/', views.LoanedBooksByUserListView.as_view(), name='my-borrowed'),

@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Book, Author, BookInstance, Genre
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -75,9 +75,6 @@ def libraryMembersOnly(request):
         return render(request, 'catalog/u_not_library_member.html')
 
 
-
-
-
 @login_required
 @permission_required('catalog.can_mark_returned', raise_exception=True)
 def renew_book_librarian(request, pk):
@@ -102,11 +99,13 @@ def renew_book_librarian(request, pk):
 class AuthorCreate(CreateView):
     model = Author
     fields = '__all__'
-    initial={'date_of_death':'12/10/2016',}
+    initial = {'date_of_death': '12/10/2016', }
+
 
 class AuthorUpdate(UpdateView):
     model = Author
-    fields = ['first_name','last_name','date_of_birth','date_of_death']
+    fields = ['first_name', 'last_name', 'date_of_birth', 'date_of_death']
+
 
 class AuthorDelete(DeleteView):
     model = Author
@@ -118,6 +117,7 @@ class CustomEnter(CreateView):
     template_name = 'catalog/custom_form_enter.html'
     success_url = reverse_lazy("custom_enter")
 
+
 class EditList(generic.ListView):
     model = Book
     template_name = 'catalog/custom_list_for_editing.html'
@@ -127,3 +127,9 @@ class CustomEditing(UpdateView):
     model = Book
     fields = '__all__'
     template_name = 'catalog/custom_editing_form.html'
+
+
+def CustomDeletion(request, pk):
+    object = get_object_or_404(Book, pk=pk)
+    object.delete()
+    return redirect("custom_edit")

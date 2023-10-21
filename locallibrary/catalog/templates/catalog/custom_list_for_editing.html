@@ -8,6 +8,7 @@
       <li>
         <a href="{{ book.get_absolute_url }}">{{ book.title }}</a>
         ({{book.author}})<a href="{% url 'custom-edit-instance' book.id %}">edit </a>
+        <a href="{% url 'custom-delete-instance' book.id %}"> DELETE </a>
 
       </li>
       {% endfor %}
@@ -15,4 +16,21 @@
   {% else %}
     <p>There are no books in the library.</p>
   {% endif %}
+{% endblock %}
+
+{% block sidebar %}
+   <ul class="sidebar-nav">
+        <li><a href="{% url 'index' %}">Home</a></li>
+        <li><a href="{% url 'books' %}">All books</a></li>
+        <li><a href="{% url 'authors' %}">All authors</a></li>
+    </ul>
+    {% if user.is_authenticated %}
+        <li>User: {{ user.get_username }}</li>
+        <li><a href="{% url 'my-borrowed' %}">My Borrowed</a></li>
+        <li><a href="{% url 'logout' %}?next={{ request.path }}">Logout</a></li>
+        <li><a href="{% url 'test-lib-members' %}">Staff only </a></li>
+        {% include 'includes/custom_enter_link.html' %}
+    {% else %}
+        <li><a href="{% url 'login' %}?next={{ request.path }}">Login</a></li>
+    {% endif %}
 {% endblock %}
