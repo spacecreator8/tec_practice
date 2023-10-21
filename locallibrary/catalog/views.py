@@ -12,6 +12,7 @@ from .forms import RenewBookForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from .models import Author
+from .forms import CustomFormEnter
 
 
 def index(request):
@@ -110,3 +111,19 @@ class AuthorUpdate(UpdateView):
 class AuthorDelete(DeleteView):
     model = Author
     success_url = reverse_lazy('authors')
+
+
+class CustomEnter(CreateView):
+    form_class = CustomFormEnter
+    template_name = 'catalog/custom_form_enter.html'
+    success_url = reverse_lazy("custom_enter")
+
+class EditList(generic.ListView):
+    model = Book
+    template_name = 'catalog/custom_list_for_editing.html'
+
+
+class CustomEditing(UpdateView):
+    model = Book
+    fields = '__all__'
+    template_name = 'catalog/custom_editing_form.html'

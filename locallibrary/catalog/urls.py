@@ -8,7 +8,11 @@ urlpatterns = [
     path('book/<int:pk>', views.BookDetailView.as_view(), name='book-detail'),
     path('authors/', views.AuthorsListView.as_view(), name='authors'),
     path('author/<int:pk>', views.AuthorDetailView.as_view(), name='author-detail'),
-    path('testlm/', views.libraryMembersOnly, name="test-lib-members")
+    path('testlm/', views.libraryMembersOnly, name="test-lib-members"),
+    path('form_add/', views.CustomEnter.as_view(), name="custom_enter"),
+    path('edit_list/', views.EditList.as_view(), name="custom_edit"),
+    path('edit_list/editing/<int:pk>', views.CustomEditing.as_view(), name="custom-edit-instance")
+    # path('edit_list/deletion/<int:pk_inst>', views.stub, name="custom-delete-instance")
 ]
 urlpatterns += [
     path('mybooks/', views.LoanedBooksByUserListView.as_view(), name='my-borrowed'),
